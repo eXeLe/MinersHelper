@@ -18,8 +18,9 @@ else
     <MudTable Items="monsters" Hover="true" SortLabel="Sort By" Elevation="0" GroupBy="@_groupDefinition" Dense=true
           GroupHeaderStyle="background-color:var(--mud-palette-background-grey)">
         <HeaderContent>
-            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Monsters, object>(x=>x.name)">Name</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Monsters, object>(x=>x.cooldown)">Cooldown</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" Enabled=false SortBy="new Func<Monsters, object>(x=>x.sort)">Name</MudTableSortLabel></MudTh>
+            <MudTh>Cooldown time (minutes)</MudTh>
+            <MudTh>Timer</MudTh>
         </HeaderContent>
         <GroupHeaderTemplate>
             <MudTh Class="mud-table-cell-custom-group" colspan="5">@($"{context.Key}") </MudTh>
@@ -33,9 +34,9 @@ else
                 </MudButton>
             </MudTd>
         </RowTemplate>
-        <PagerContent>
+@*        <PagerContent>
             <MudTablePager PageSizeOptions="new int[]{10, 20}" />
-        </PagerContent>
+        </PagerContent>*@
     </MudTable>
 }
 
@@ -65,7 +66,8 @@ else
         public string id { get; set; }
         public string? name { get; set; }
         public int cooldown { get; set; }
-        public MudWatch idWatch;
+        public int sort { get; set; }
+        public MudWatch? idWatch;
         public string? Group { get; set; }
     }
 

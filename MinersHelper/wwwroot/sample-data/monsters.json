@@ -1,20 +1,86 @@
 ﻿[
   {
+    "sort": 1,
     "group": "Mitar",
-    "id": "Boss1",
+    "id": "Uhrrhaz",
     "name": "Uhr-rhaz",
     "cooldown": 20
   },
   {
+    "sort": 2,
     "group": "Mitar",
-    "id": "Boss2",
+    "id": "Sharra",
     "name": "Sharra",
     "cooldown": 30
   },
   {
+    "sort": 3,
+    "group": "Mitar",
+    "id": "Raghor",
+    "name": "Raghor",
+    "cooldown": 30
+  },
+  {
+    "sort": 1,
     "group": "Village",
     "id": "PetChest",
     "name": "Pet Chest",
     "cooldown": 120
+  },
+  {
+    "sort": 2,
+    "group": "Village",
+    "id": "PetChestAD",
+    "name": "Pet Chest AD",
+    "cooldown": 360
+  },
+  {
+    "sort": 3,
+    "group": "Village",
+    "id": "Balloon1",
+    "name": "Airport 4h",
+    "cooldown": 240
+  },
+  {
+    "sort": 4,
+    "group": "Village",
+    "id": "Balloon2",
+    "name": "Airport AD",
+    "cooldown": 240
+  },
+  {
+    "sort": 1,
+    "group": "Mines",
+    "id": "Necro",
+    "name": "Necromancer",
+    "cooldown": 360
+  },
+  {
+    "sort": 1,
+    "group": "Dungeon",
+    "id": "GolblinsLeader",
+    "name": "Golblins Leader",
+    "cooldown": 60
+  },
+  {
+    "sort": 2,
+    "group": "Dungeon",
+    "id": "Troll",
+    "name": "Troll",
+    "cooldown": 120
+  },
+  {
+    "sort": 3,
+    "group": "Dungeon",
+    "id": "EarthElemental",
+    "name": "EarthElemental",
+    "cooldown": 180
+  },
+  {
+    "sort": 4,
+    "group": "Dungeon",
+    "id": "DungeonKing",
+    "name": "Dungeon King",
+    "cooldown": 300
   }
 ]
