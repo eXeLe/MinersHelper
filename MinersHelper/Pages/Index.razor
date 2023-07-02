@@ -1,0 +1,86 @@
+﻿@page "/"
+
+@inject HttpClient Http
+@using MudBlazor.Extensions
+@using MudExtensions.Utilities
+@using MudExtensions.Enums
+
+<PageTitle>Index</PageTitle>
+
+<MudText Typo="Typo.h1">Miners Settlement Helper</MudText>
+<MudText Typo="Typo.h5">Countdown Timers for game content. Click any timer to start countdown.</MudText>
+@if (monsters == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudTable Items="monsters" Hover="true" SortLabel="Sort By" Elevation="0" GroupBy="@_groupDefinition" Dense=true
+          GroupHeaderStyle="background-color:var(--mud-palette-background-grey)">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Monsters, object>(x=>x.name)">Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Monsters, object>(x=>x.cooldown)">Cooldown</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <GroupHeaderTemplate>
+            <MudTh Class="mud-table-cell-custom-group" colspan="5">@($"{context.Key}") </MudTh>
+        </GroupHeaderTemplate>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.name</MudTd>
+            <MudTd DataLabel="Cooldown">@context.cooldown</MudTd>
+            <MudTd DataLabel="Timer">
+                <MudButton OnClick="@(()=>{context.idWatch.Reset(); context.idWatch.Start(); context.idWatch.Color=Color.Warning;})">
+                    <MudWatch @ref="@context.idWatch" Interval="TimeSpan.FromMilliseconds(1)" Mode="WatchMode.CountDown" ShowMillisecond=false CountdownTime="@TimeSpan.FromMinutes(context.cooldown)" CountdownCompleted="@(()=>context.idWatch.Color=Color.Success)" />
+                </MudButton>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{10, 20}" />
+        </PagerContent>
+    </MudTable>
+}
+
+
+
+@code {
+
+    private IEnumerable<Monsters> monsters = new List<Monsters>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        monsters = await Http.GetFromJsonAsync<List<Monsters>>("sample-data/monsters.json");
+        foreach (Monsters m in monsters) { m.idWatch = new MudWatch(); }
+    }
+
+    private TableGroupDefinition<Monsters> _groupDefinition = new()
+    {
+        GroupName = "Group",
+        Indentation = false,
+        Expandable = true,
+        IsInitiallyExpanded = true,
+        Selector = (e) => e.Group
+    };
+
+    public class Monsters
+    {
+        public string id { get; set; }
+        public string? name { get; set; }
+        public int cooldown { get; set; }
+        public MudWatch idWatch;
+        public string? Group { get; set; }
+    }
+
+
+    MudWatch _watch = new MudWatch();
+    string _delimiter = ":";
+    TimeSpan _value = new TimeSpan(0, 0, 0);
+
+    async Task SetTimer()
+    {
+        
+        _watch.CountdownTime= DateTime.Now.AddMinutes(20).Subtract(DateTime.Now);
+        _watch.Reset();
+        _watch.Start();
+        Console.WriteLine("Timer reset");
+    }
+
+}

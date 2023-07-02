@@ -1,0 +1,20 @@
+﻿[
+  {
+    "group": "Mitar",
+    "id": "Boss1",
+    "name": "Uhr-rhaz",
+    "cooldown": 20
+  },
+  {
+    "group": "Mitar",
+    "id": "Boss2",
+    "name": "Sharra",
+    "cooldown": 30
+  },
+  {
+    "group": "Village",
+    "id": "PetChest",
+    "name": "Pet Chest",
+    "cooldown": 120
+  }
+]
