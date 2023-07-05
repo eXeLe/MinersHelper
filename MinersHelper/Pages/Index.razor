@@ -4,12 +4,14 @@
 @using MudBlazor.Extensions
 @using MudExtensions.Utilities
 @using MudExtensions.Enums
+@inject ISnackbar Snackbar
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Miners Settlement Helper</PageTitle>
 
-<MudText Typo="Typo.h1">Miners Settlement Helper</MudText>
-<MudText Typo="Typo.h5">Countdown Timers for game content. Click any timer to start countdown.</MudText>
-@if (monsters == null)
+<MudText Typo="Typo.h3">Miners Settlement Helper</MudText>
+<MudText Typo="Typo.h6">Countdown Timers for game content. Click any timer to start countdown.</MudText>
+@if (monsters is null)
 {
     <MudProgressCircular Color="Color.Default" Indeterminate="true" />
 }
@@ -23,20 +25,23 @@ else
             <MudTh>Timer</MudTh>
         </HeaderContent>
         <GroupHeaderTemplate>
-            <MudTh Class="mud-table-cell-custom-group" colspan="5">@($"{context.Key}") </MudTh>
+            <MudTh Class="mud-table-cell-custom-group" colspan="3">@($"{context.GroupName}: {context.Key}") </MudTh>
         </GroupHeaderTemplate>
         <RowTemplate>
             <MudTd DataLabel="Name">@context.name</MudTd>
             <MudTd DataLabel="Cooldown">@context.cooldown</MudTd>
             <MudTd DataLabel="Timer">
-                <MudButton OnClick="@(()=>{context.idWatch.Reset(); context.idWatch.Start(); context.idWatch.Color=Color.Warning;})">
-                    <MudWatch @ref="@context.idWatch" Interval="TimeSpan.FromMilliseconds(1)" Mode="WatchMode.CountDown" ShowMillisecond=false CountdownTime="@TimeSpan.FromMinutes(context.cooldown)" CountdownCompleted="@(()=>context.idWatch.Color=Color.Success)" />
+                <MudButton OnClick="@(()=>{context.idWatch.CountdownTime=context.idWatch.Value.Subtract(TimeSpan.FromMinutes(60));localStorage.SetItemAsync(context.id, DateTime.Now.Add(context.idWatch.Value.Subtract(TimeSpan.FromMinutes(60))));})">-60</MudButton>
+                <MudButton OnClick="@(()=>{context.idWatch.CountdownTime=context.idWatch.Value.Subtract(TimeSpan.FromMinutes(10));localStorage.SetItemAsync(context.id, DateTime.Now.Add(context.idWatch.Value.Subtract(TimeSpan.FromMinutes(10))));})">-10</MudButton>
+                <MudButton OnClick="@(()=>{context.idWatch.CountdownTime=context.idWatch.Value.Subtract(TimeSpan.FromMinutes( 1));localStorage.SetItemAsync(context.id, DateTime.Now.Add(context.idWatch.Value.Subtract(TimeSpan.FromMinutes( 1))));})">-1</MudButton>
+                <MudButton OnClick="@(()=>{context.idWatch.CountdownTime=context.value;context.idWatch.Reset(); context.idWatch.Start(); context.idWatch.Color=Color.Warning;localStorage.SetItemAsync(context.id, DateTime.Now.Add(context.idWatch.Value));context.value=TimeSpan.FromMinutes(context.cooldown);})">
+                    <MudWatch  @ref="@context.idWatch" value="@context.value" Interval="TimeSpan.FromMilliseconds(1)" Mode="WatchMode.CountDown" ShowMillisecond=false CountdownCompleted="@(()=>{context.idWatch.Color=Color.Success;Snackbar.Add(context.name+" ready!", Severity.Success);context.idWatch.CountdownTime=TimeSpan.Zero;context.value=TimeSpan.FromMinutes(context.cooldown);})" />
                 </MudButton>
+                <MudButton OnClick="@(()=>{context.idWatch.CountdownTime=context.idWatch.Value.Add(TimeSpan.FromMinutes( 1));localStorage.SetItemAsync(context.id, DateTime.Now.Add(context.idWatch.Value.Add(TimeSpan.FromMinutes( 1))));})">+1</MudButton>
+                <MudButton OnClick="@(()=>{context.idWatch.CountdownTime=context.idWatch.Value.Add(TimeSpan.FromMinutes(10));localStorage.SetItemAsync(context.id, DateTime.Now.Add(context.idWatch.Value.Add(TimeSpan.FromMinutes(10))));})">+10</MudButton>
+                <MudButton OnClick="@(()=>{context.idWatch.CountdownTime=context.idWatch.Value.Add(TimeSpan.FromMinutes(60));localStorage.SetItemAsync(context.id, DateTime.Now.Add(context.idWatch.Value.Add(TimeSpan.FromMinutes(60))));})">+60</MudButton>
             </MudTd>
         </RowTemplate>
-@*        <PagerContent>
-            <MudTablePager PageSizeOptions="new int[]{10, 20}" />
-        </PagerContent>*@
     </MudTable>
 }
 
@@ -46,43 +51,63 @@ else
 
     private IEnumerable<Monsters> monsters = new List<Monsters>();
 
+
     protected override async Task OnInitializedAsync()
     {
         monsters = await Http.GetFromJsonAsync<List<Monsters>>("sample-data/monsters.json");
-        foreach (Monsters m in monsters) { m.idWatch = new MudWatch(); }
+        foreach(var m in monsters)
+        {
+            try
+            {
+                var remaining = await localStorage.GetItemAsync<DateTime>(m.id);
+                if (remaining>DateTime.Now)
+                {
+                    m.value = remaining - DateTime.Now;
+                }
+                else
+                {
+                    m.value = TimeSpan.FromMinutes(m.cooldown);
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error reading data for "+m.id+":" +e.Message);
+                m.value = TimeSpan.FromMinutes(m.cooldown);
+            }
+        }
+
     }
 
     private TableGroupDefinition<Monsters> _groupDefinition = new()
-    {
-        GroupName = "Group",
-        Indentation = false,
-        Expandable = true,
-        IsInitiallyExpanded = true,
-        Selector = (e) => e.Group
-    };
+        {
+            GroupName = "Type",
+            Indentation = false,
+            Expandable = true,
+            IsInitiallyExpanded = false,
+            Selector = (e) => e.type,
+            InnerGroup = new TableGroupDefinition<Monsters>()
+            {
+                GroupName = "Zone",
+                Indentation = false,
+                Expandable = true,
+                IsInitiallyExpanded = false,
+                Selector = (e) => e.zone
+            }
+        };
 
     public class Monsters
     {
+        public string type { get; set; }
         public string id { get; set; }
-        public string? name { get; set; }
+        public string name { get; set; }
         public int cooldown { get; set; }
         public int sort { get; set; }
-        public MudWatch? idWatch;
-        public string? Group { get; set; }
-    }
+        public string? zone { get; set; }
+        public MudWatch idWatch = new MudWatch();
+        //public bool init = false;
+        public TimeSpan value { get; set; }
 
 
-    MudWatch _watch = new MudWatch();
-    string _delimiter = ":";
-    TimeSpan _value = new TimeSpan(0, 0, 0);
-
-    async Task SetTimer()
-    {
-        
-        _watch.CountdownTime= DateTime.Now.AddMinutes(20).Subtract(DateTime.Now);
-        _watch.Reset();
-        _watch.Start();
-        Console.WriteLine("Timer reset");
     }
 
 }

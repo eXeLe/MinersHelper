@@ -1,86 +1,226 @@
 ﻿[
   {
-    "sort": 1,
-    "group": "Mitar",
+    "type": "Monster",
+    "zone": "Mitar",
+    "sort": 401,
     "id": "Uhrrhaz",
     "name": "Uhr-rhaz",
     "cooldown": 20
   },
   {
-    "sort": 2,
-    "group": "Mitar",
+    "type": "Monster",
+    "zone": "Mitar",
+    "sort": 402,
     "id": "Sharra",
     "name": "Sharra",
     "cooldown": 30
   },
   {
-    "sort": 3,
-    "group": "Mitar",
+    "type": "Monster",
+    "zone": "Mitar",
+    "sort": 403,
     "id": "Raghor",
     "name": "Raghor",
     "cooldown": 30
   },
   {
-    "sort": 1,
-    "group": "Village",
+    "type": "Resource",
+    "zone": "Mitar",
+    "sort": 451,
+    "id": "MitarOre1",
+    "name": "Mitar Ore 1",
+    "cooldown": 5
+  },
+  {
+    "type": "Resource",
+    "zone": "Mitar",
+    "sort": 452,
+    "id": "MitarOre2",
+    "name": "Mitar Ore 3",
+    "cooldown": 7
+  },
+  {
+    "type": "Resource",
+    "zone": "Mitar",
+    "sort": 453,
+    "id": "MitarOre3",
+    "name": "Mitar Ore 3",
+    "cooldown": 9
+  },
+  {
+    "type": "Resource",
+    "zone": "Village",
+    "sort": 151,
+    "id": "FishingBait",
+    "name": "Fishing Bait x3",
+    "cooldown": 20
+  },
+  {
+    "type": "Resource",
+    "zone": "Village",
+    "sort": 152,
     "id": "PetChest",
     "name": "Pet Chest",
     "cooldown": 120
   },
   {
-    "sort": 2,
-    "group": "Village",
+    "type": "Resource",
+    "zone": "Village",
+    "sort": 153,
     "id": "PetChestAD",
     "name": "Pet Chest AD",
     "cooldown": 360
   },
   {
-    "sort": 3,
-    "group": "Village",
+    "type": "Resource",
+    "zone": "Village",
+    "sort": 154,
     "id": "Balloon1",
     "name": "Airport 4h",
     "cooldown": 240
   },
   {
-    "sort": 4,
-    "group": "Village",
+    "type": "Resource",
+    "zone": "Village",
+    "sort": 155,
     "id": "Balloon2",
     "name": "Airport AD",
     "cooldown": 240
   },
   {
-    "sort": 1,
-    "group": "Mines",
+    "type": "Resource",
+    "zone": "Village",
+    "sort": 156,
+    "id": "Balloon3",
+    "name": "Airport 12h",
+    "cooldown": 720
+  },
+  {
+    "type": "Resource",
+    "zone": "Village",
+    "sort": 157,
+    "id": "Balloon4",
+    "name": "Airport 36h",
+    "cooldown": 2160
+  },
+  {
+    "type": "Monster",
+    "zone": "Mines",
+    "sort": 301,
     "id": "Necro",
     "name": "Necromancer",
     "cooldown": 360
   },
   {
-    "sort": 1,
-    "group": "Dungeon",
+    "type": "Monster",
+    "zone": "Dungeon",
+    "sort": 201,
     "id": "GolblinsLeader",
     "name": "Golblins Leader",
     "cooldown": 60
   },
   {
-    "sort": 2,
-    "group": "Dungeon",
+    "type": "Monster",
+    "zone": "Dungeon",
+    "sort": 202,
     "id": "Troll",
     "name": "Troll",
     "cooldown": 120
   },
   {
-    "sort": 3,
-    "group": "Dungeon",
+    "type": "Monster",
+    "zone": "Dungeon",
+    "sort": 203,
     "id": "EarthElemental",
     "name": "EarthElemental",
     "cooldown": 180
   },
   {
-    "sort": 4,
-    "group": "Dungeon",
+    "type": "Monster",
+    "zone": "Dungeon",
+    "sort": 204,
     "id": "DungeonKing",
     "name": "Dungeon King",
     "cooldown": 300
+  },
+  {
+    "type": "Monster",
+    "zone": "Einlor",
+    "sort": 501,
+    "id": "TrollWarchief",
+    "name": "Troll Warchief",
+    "cooldown": 60
+  },
+  {
+    "type": "Monster",
+    "zone": "Einlor",
+    "sort": 502,
+    "id": "Sumbeor",
+    "name": "Sumbeor",
+    "cooldown": 300
+  },
+  {
+    "type": "Resource",
+    "zone": "Einlor",
+    "sort": 551,
+    "id": "LeafOfLife1",
+    "name": "Leaf Of Life",
+    "cooldown": 1380
+  },
+  {
+    "type": "Resource",
+    "zone": "Einlor",
+    "sort": 552,
+    "id": "OreOfLife1",
+    "name": "Ore Of Life 1",
+    "cooldown": 1380
+  },
+  {
+    "type": "Resource",
+    "zone": "Einlor",
+    "sort": 553,
+    "id": "OrefOfLife2",
+    "name": "Ore Of Life 2",
+    "cooldown": 1380
+  },
+  {
+    "type": "Event",
+    "zone": "Pirate Summer",
+    "sort": 1,
+    "id": "PirateToken1",
+    "name": "Pirate Token 1",
+    "cooldown": 180
+  },
+  {
+    "type": "Event",
+    "zone": "Pirate Summer",
+    "sort": 2,
+    "id": "PirateToken2",
+    "name": "Pirate Token 2",
+    "cooldown": 180
+  },
+  {
+    "type": "Event",
+    "zone": "Pirate Summer",
+    "sort": 3,
+    "id": "PirateToken3",
+    "name": "Pirate Token 3",
+    "cooldown": 180
+  },
+  {
+    "type": "Event",
+    "zone": "Pirate Summer",
+    "sort": 4,
+    "id": "PirateToken4",
+    "name": "Pirate Token 4",
+    "cooldown": 180
+  },
+  {
+    "type": "Event",
+    "zone": "Steam Launch",
+    "sort": 5,
+    "id": "SteamToken1",
+    "name": "Steam Token",
+    "cooldown": 120
   }
 ]
